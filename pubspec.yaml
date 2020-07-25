@@ -37,6 +37,14 @@ dependencies:
 
   rxdart: ^0.24.1
 
+  # GetX is an extra-light and powerful solution for Flutter. It combines high performance state management,
+  # intelligent dependency injection, and route management in a quick and practical way.
+  get: ^3.4.0
+
+  # Zefyr's rich text editor is built with simplicity and flexibility in mind.
+  # It provides clean interface for distraction-free editing. Think Medium.com-like experience.
+  zefyr: ^0.11.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

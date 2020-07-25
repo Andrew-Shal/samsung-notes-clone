@@ -10,6 +10,8 @@ class NoteModel {
   CategoryModel category;
   DateTime dateCreated;
 
+  NoteModel() {}
+
   NoteModel.fromDb(Map<String, dynamic> parsedJSON) {
     this.id = parsedJSON['note_id'];
     this.title = parsedJSON['title'];

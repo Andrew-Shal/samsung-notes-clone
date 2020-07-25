@@ -7,7 +7,7 @@ import '../models/note_model.dart';
 
 class NotesDbProvider {
   Database db;
-  static const String dbName = "notes17.db";
+  static const String dbName = "notes18.db";
 
   Future _open({name = dbName}) async {
     if (db == null || db.isOpen) {
@@ -44,9 +44,9 @@ class NotesDbProvider {
           FOREIGN KEY (note_id) REFERENCES notes(id),
           FOREIGN KEY (category_id) REFERENCES categories(id)
         )""");
-          await newDb.execute("DELETE FROM note_in_category");
+          /*await newDb.execute("DELETE FROM note_in_category");
           await newDb.execute("DELETE FROM notes");
-          await newDb.execute("DELETE FROM categories");
+          await newDb.execute("DELETE FROM categories");*/
 
           await newDb.execute(
               "INSERT INTO categories(name,color_identifier)VALUES('uncategorized','#DCDCDC')");
@@ -125,6 +125,24 @@ class NotesDbProvider {
     final count = Sqflite.firstIntValue(
         await db.rawQuery("SELECT COUNT(*) FROM notes WHERE is_removed = 0"));
     return count;
+  }
+
+  void insertNote(NoteModel newNote) async {
+    await _open();
+
+    int noteId = await db.insert("notes", {
+      "title": newNote.title,
+      "note": newNote.note,
+      "category_fk": 1,
+      "date_created": DateTime.now().toString(),
+    }).whenComplete(() {
+      print('Sucessfully saved');
+    }).catchError((err) => print('err saving $err'));
+
+    db.insert("note_in_category", {
+      "note_id": noteId,
+      "category_id": 1
+    }).catchError((err) => print('err saving $err'));
   }
 }
 

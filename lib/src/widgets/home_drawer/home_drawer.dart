@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import './home_drawer_item.dart';
 
-class MenuList extends StatelessWidget {
+class HomeDrawer extends StatelessWidget {
+  // ignore: todo
+  // TODO : move over to separate file of get managed by state
   final List<Map<String, dynamic>> menuItems = [
     {
       "title": "",
@@ -57,37 +60,9 @@ class MenuList extends StatelessWidget {
 
   List<Widget> buildMenuItems() {
     List<Widget> children = [];
-
     menuItems.forEach((element) {
-      children.add(MenuListItem(element));
+      children.add(HomeDrawerItem(element));
     });
-
     return children;
-  }
-}
-
-class MenuListItem extends StatelessWidget {
-  final menuData;
-  MenuListItem(data) : menuData = data;
-
-  @override
-  Widget build(BuildContext context) {
-    if (menuData['type'] == 'F_BTN') {
-      return ListTile(
-        trailing: IconButton(icon: Icon(menuData['trailing']), onPressed: null),
-      );
-    } else if (menuData['type'] == 'LIST') {
-      return ListTile(
-        leading: Icon(menuData['leading']),
-        title: Text(menuData['title']),
-      );
-    } else if (menuData['type'] == 'DIVIDER') {
-      return Divider(color: Colors.white);
-    }
-
-    // DropDown type
-    return ListTile(
-      title: Text(menuData['title']),
-    );
   }
 }
