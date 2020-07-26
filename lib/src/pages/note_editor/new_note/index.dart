@@ -43,6 +43,7 @@ class NewNote extends StatelessWidget {
                             child: ZefyrEditor(
                       controller: ctrl.zefcontroller,
                       focusNode: ctrl.focusNode,
+                      autofocus: false,
                     ))),
                   ],
                 ),

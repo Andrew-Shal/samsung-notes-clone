@@ -18,6 +18,7 @@ class NewNoteController extends GetxController {
   NoteModel noteModel;
 
   NewNoteController() {
+    print("got here");
     loadWYSIWYG();
 
     noteModel = NoteModel();
@@ -53,14 +54,5 @@ class NewNoteController extends GetxController {
     print(noteModel.title);
 
     appController.dbProvider.insertNote(noteModel);
-    /*
-    int id;
-    String title;
-    var note;
-    bool isRemoved;
-    bool isFavorite;
-    CategoryModel category;
-    DateTime dateCreated;
-    */
   }
 }
