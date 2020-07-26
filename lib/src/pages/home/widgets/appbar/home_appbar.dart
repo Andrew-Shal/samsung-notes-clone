@@ -29,9 +29,9 @@ class HomeAppBar extends StatelessWidget {
             scaffoldKey.currentState.openDrawer();
           },
         ),
-        title: Row(children: [
-          Opacity(
-              opacity: 1.0, child: Text(controller.appController.appBarTitle)),
+        title: Opacity(
+            opacity: 1.0, child: Text(controller.appController.appBarTitle)),
+        actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {},
@@ -42,7 +42,7 @@ class HomeAppBar extends StatelessWidget {
             onPressed: () {},
             alignment: Alignment.centerRight,
           )
-        ]),
+        ],
       )),
     );
   }
