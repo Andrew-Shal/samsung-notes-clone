@@ -9,8 +9,9 @@ class NoteModel {
   bool isFavorite;
   CategoryModel category;
   DateTime dateCreated;
+  DateTime dateUpdated;
 
-  NoteModel() {}
+  NoteModel();
 
   NoteModel.fromDb(Map<String, dynamic> parsedJSON) {
     this.id = parsedJSON['note_id'];
@@ -20,5 +21,6 @@ class NoteModel {
     this.isFavorite = parsedJSON['is_favorite'] == 1 ? true : false;
     this.category = CategoryModel.fromDb(parsedJSON);
     this.dateCreated = DateTime.parse(parsedJSON['date_created']);
+    this.dateUpdated = DateTime.parse(parsedJSON['date_updated']);
   }
 }
