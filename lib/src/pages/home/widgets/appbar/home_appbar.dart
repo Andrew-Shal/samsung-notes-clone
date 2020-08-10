@@ -55,10 +55,14 @@ class HomeAppBar extends StatelessWidget {
             controller.appController.appBarTitle,
             textAlign: TextAlign.left,
           ),
-          Text(
-            "${controller.notesCount} note${controller.notesCount <= 1 ? '' : 's'}",
-            style: TextStyle(fontSize: 12.0),
-            textAlign: TextAlign.left,
+          Obx(
+            () {
+              return Text(
+                '${controller.notes.length}',
+                style: TextStyle(fontSize: 12.0),
+                textAlign: TextAlign.left,
+              );
+            },
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.center,

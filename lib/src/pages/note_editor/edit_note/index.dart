@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notes_app/src/pages/note_editor/new_note/controller.dart';
+import 'package:notes_app/src/pages/note_editor/edit_note/controller.dart';
 import 'package:zefyr/zefyr.dart';
 
-class NewNote extends StatelessWidget {
+class EditNote extends StatelessWidget {
   @override
   build(BuildContext context) {
-    return GetBuilder<NewNoteController>(
-        init: NewNoteController(),
+    return GetBuilder<EditNoteController>(
+        init: EditNoteController(),
         builder: (ctrl) {
           return Scaffold(
               appBar: AppBar(
                   leading: BackButton(
                     onPressed: () {
-                      Get.back();
+                      Get.toNamed('/');
                     },
                   ),
-                  title: Text('New Note'),
+                  title: Text('Edit Note'),
                   actions: <Widget>[
                     FlatButton(
                       onPressed: () {
@@ -37,16 +37,21 @@ class NewNote extends StatelessWidget {
                         hintText: 'title',
                       ),
                     ),
-                    Expanded(
-                        child: ZefyrScaffold(
-                            child: ZefyrEditor(
-                      controller: ctrl.zefcontroller,
-                      focusNode: ctrl.focusNode,
-                      autofocus: false,
-                    ))),
+                    Expanded(child: zefScaffold(ctrl)),
                   ],
                 ),
               ));
         });
+  }
+
+  Widget zefScaffold(EditNoteController _controller) {
+    if (_controller.zefcontroller == null)
+      return Center(child: CircularProgressIndicator());
+    return ZefyrScaffold(
+        child: ZefyrEditor(
+      controller: _controller.zefcontroller,
+      focusNode: _controller.focusNode,
+      autofocus: false,
+    ));
   }
 }

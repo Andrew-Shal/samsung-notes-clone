@@ -8,11 +8,15 @@ class NotesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: controller.notes.length,
-      itemBuilder: (context, int idx) {
-        return NoteListItem(controller.notes[idx]);
-      },
-    );
+    return Obx(() => ListView.builder(
+          itemCount: controller.notes.length,
+          itemBuilder: (context, int idx) {
+            return NoteListItem(controller.notes.elementAt(idx));
+          },
+        ));
+  }
+
+  noItems() {
+    return Center(child: Text("You don't have any notes"));
   }
 }

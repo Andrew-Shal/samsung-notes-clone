@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/src/controller.dart';
+import 'package:notes_app/src/pages/home/controller.dart';
 import '../../../models/note_model.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:zefyr/zefyr.dart';
@@ -8,6 +9,7 @@ import 'dart:convert';
 
 class NewNoteController extends GetxController {
   AppController appController = Get.find();
+  HomeController homeController = Get.find();
 
   /// Allows to control the editor and the document.
   ZefyrController zefcontroller;
@@ -18,7 +20,6 @@ class NewNoteController extends GetxController {
   NoteModel noteModel;
 
   NewNoteController() {
-    print("got here");
     loadWYSIWYG();
 
     noteModel = NoteModel();
@@ -42,17 +43,22 @@ class NewNoteController extends GetxController {
 
   void updateTitle(String newValue) {
     noteModel.title = newValue;
-    update();
   }
 
-  void saveDocument() {
-    // Notus documents can be easily serialized to JSON by passing to
-    // `jsonEncode` directly
-    final contents = jsonEncode(zefcontroller.document);
+  void saveDocument() async {
+    final contents = jsonEncode(zefcontroller.document.toPlainText());
     noteModel.note = contents;
-    print(noteModel.note);
-    print(noteModel.title);
 
-    appController.dbProvider.insertNote(noteModel);
+    int id = await appController.dbProvider.insertNote(noteModel);
+
+    // ignore: todo
+    // TODO: instead of setting the id, we can set the entire inserted item and update notemodel to get info as date created, date updated, id, is removed, is favorite. then we can pass to route instead of fetching again on edit route
+    noteModel.id = id;
+    homeController.loadNotes();
+    Get.back();
+    Get.snackbar(
+      "saved",
+      "note sucessfully saved!",
+    );
   }
 }

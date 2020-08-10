@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../models/note_model.dart';
 
 class NoteListItem extends StatelessWidget {
@@ -16,7 +17,7 @@ class NoteListItem extends StatelessWidget {
               shape: Border(right: BorderSide(color: Colors.red, width: 8)),
               child: ListTile(
                 onTap: () {
-                  print("note ${_noteModel.id} clicked!");
+                  Get.toNamed("/note/edit/${_noteModel.id}");
                 },
                 onLongPress: () {},
                 title: Text('${_noteModel.title}'),

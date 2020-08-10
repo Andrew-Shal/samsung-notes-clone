@@ -14,6 +14,5 @@ class AppController extends GetxController {
   // state update methods
   setAppBarTitle(String newTitle) {
     appBarTitle = newTitle;
-    update();
   }
 }

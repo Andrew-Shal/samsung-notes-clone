@@ -4,28 +4,21 @@ import '../../models/note_model.dart';
 
 class HomeController extends GetxController {
   AppController appController = Get.find();
-  int notesCount = 0;
-  List<NoteModel> notes = List<NoteModel>();
+
+  RxList<NoteModel> _notes = RxList<NoteModel>(List<NoteModel>());
+  set notes(List<NoteModel> val) => _notes.value = val;
+  List<NoteModel> get notes => _notes.value;
 
   HomeController() {
     // update page title
     appController.setAppBarTitle("All notes");
 
-    print("home controller: $notesCount");
-
-    loadNotesCount();
+    // get notes from db
     loadNotes();
   }
 
   loadNotes() async {
     // load notes
     notes = await appController.dbProvider.fetchNotes();
-    update();
-  }
-
-  // set state methods
-  loadNotesCount() async {
-    notesCount = await appController.dbProvider.fetchNotesCount();
-    update();
   }
 }
