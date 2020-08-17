@@ -83,6 +83,10 @@ class NotesDbProvider {
     return id;
   }
 
+  Future<int> deleteNote(int id) async {
+    return await db.update("notes", {"is_removed": 1}, where: "id=$id");
+  }
+
   // TODO : add category key update
   Future<int> updateNote(NoteModel updatedNote) async {
     await _open();
