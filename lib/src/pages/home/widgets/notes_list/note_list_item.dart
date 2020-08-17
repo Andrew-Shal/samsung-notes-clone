@@ -17,7 +17,8 @@ class NoteListItem extends StatelessWidget {
               shape: Border(right: BorderSide(color: Colors.red, width: 8)),
               child: ListTile(
                 onTap: () {
-                  Get.toNamed("/note/edit/${_noteModel.id}");
+                  Get.toNamed("/note/edit/${_noteModel.id}",
+                      arguments: _noteModel);
                 },
                 onLongPress: () {},
                 title: Text('${_noteModel.title}'),

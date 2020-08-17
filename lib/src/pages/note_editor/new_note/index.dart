@@ -34,16 +34,18 @@ class NewNote extends StatelessWidget {
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'title',
+                        hintText: 'Title',
                       ),
                     ),
                     Expanded(
-                        child: ZefyrScaffold(
-                            child: ZefyrEditor(
-                      controller: ctrl.zefcontroller,
-                      focusNode: ctrl.focusNode,
-                      autofocus: false,
-                    ))),
+                      child: ZefyrScaffold(
+                        child: ZefyrEditor(
+                          controller: ctrl.zefcontroller,
+                          focusNode: ctrl.focusNode,
+                          autofocus: false,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ));

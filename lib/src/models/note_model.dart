@@ -40,7 +40,7 @@ class NoteModel {
   NoteModel.fromDb(Map<String, dynamic> parsedJSON) {
     this.id = parsedJSON['note_id'];
     this.title = parsedJSON['title'];
-    this.note = jsonDecode(parsedJSON['note']) ?? {};
+    this.note = parsedJSON['note'];
     this.isRemoved = parsedJSON['note_removed'] == 1 ? true : false;
     this.isFavorite = parsedJSON['is_favorite'] == 1 ? true : false;
     this.category = CategoryModel.fromDb(parsedJSON);
@@ -55,7 +55,7 @@ class NoteModel {
     return <String, dynamic>{
       "id": id,
       "title": title,
-      "note": note,
+      "note": jsonDecode(note),
       "isRemoved": isRemoved,
       "isFavorite": isFavorite,
       "category": category.toMap(),

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../controller.dart';
+import './all_notes_more_options.dart';
 
 class HomeAppBar extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -37,11 +38,7 @@ class HomeAppBar extends StatelessWidget {
             onPressed: () {},
             alignment: Alignment.centerRight,
           ),
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-            alignment: Alignment.centerRight,
-          )
+          AllNotesMoreOptions(),
         ],
       )),
     );

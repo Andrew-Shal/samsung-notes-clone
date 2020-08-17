@@ -37,6 +37,8 @@ dependencies:
 
   rxdart: ^0.24.1
 
+  focused_menu:
+
   # GetX is an extra-light and powerful solution for Flutter. It combines high performance state management,
   # intelligent dependency injection, and route management in a quick and practical way.
   get: ^3.4.0

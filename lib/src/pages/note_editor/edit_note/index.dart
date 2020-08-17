@@ -13,7 +13,10 @@ class EditNote extends StatelessWidget {
               appBar: AppBar(
                   leading: BackButton(
                     onPressed: () {
-                      Get.toNamed('/');
+                      // TODO : snackbar with option to save, discard, cancel changes
+                      ctrl.saveDocument();
+                      Get.back();
+                      Get.snackbar("update", 'Note state sucesfully updated!');
                     },
                   ),
                   title: Text('Edit Note'),
@@ -21,6 +24,8 @@ class EditNote extends StatelessWidget {
                     FlatButton(
                       onPressed: () {
                         ctrl.saveDocument();
+                        Get.snackbar(
+                            "update", 'Note state sucesfully updated!');
                       },
                       child: Text('save'),
                     )
@@ -29,12 +34,13 @@ class EditNote extends StatelessWidget {
                 child: Column(
                   children: [
                     TextField(
+                      controller: TextEditingController()..text = ctrl.title,
                       onChanged: (value) {
                         ctrl.updateTitle(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'title',
+                        hintText: 'Title',
                       ),
                     ),
                     Expanded(child: zefScaffold(ctrl)),
@@ -46,7 +52,7 @@ class EditNote extends StatelessWidget {
 
   Widget zefScaffold(EditNoteController _controller) {
     if (_controller.zefcontroller == null)
-      return Center(child: CircularProgressIndicator());
+      return Text('An error occured when loading this document');
     return ZefyrScaffold(
         child: ZefyrEditor(
       controller: _controller.zefcontroller,

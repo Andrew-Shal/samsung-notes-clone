@@ -17,8 +17,6 @@ class CategoryModel {
   set isRemoved(bool val) => _isRemoved.value = val;
   bool get isRemoved => _isRemoved.value;
 
-  // ignore: todo
-  // TODO : convet type to datetime
   Rx<DateTime> _dateCreated = Rx<DateTime>();
   set dateCreated(DateTime val) => _dateCreated.value = val;
   DateTime get dateCreated => _dateCreated.value;

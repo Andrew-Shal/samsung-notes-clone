@@ -9,45 +9,38 @@ import 'dart:convert';
 class EditNoteController extends GetxController {
   AppController appController = Get.find();
 
-  /// Allows to control the editor and the document.
   ZefyrController zefcontroller;
-
-  /// Zefyr editor like any other input field requires a focus node.
   FocusNode focusNode;
 
   NoteModel noteModel;
 
+  String title = '';
+  String note = ''; // not being observed, used only for initial value
+
   EditNoteController() {
-    noteModel = NoteModel();
+    noteModel = Get.arguments as NoteModel;
+    title = noteModel.title;
+    note = noteModel.note;
     loadWYSIWYG();
   }
 
   loadWYSIWYG() async {
     focusNode = FocusNode();
 
-    // Here we must load the document and pass it to Zefyr controller.
-    final document = await _loadDocument();
+    final document = NotusDocument.fromJson(jsonDecode(note));
     zefcontroller = ZefyrController(document);
   }
 
-  /// Loads the document to be edited in Zefyr.
-  Future<NotusDocument> _loadDocument() async {
-    noteModel = await appController.dbProvider
-        .fetchNote(int.parse(Get.parameters['id']));
-    final Delta delta = Delta()..insert(noteModel.note);
-    return NotusDocument.fromDelta(delta);
-  }
-
   void updateTitle(String newValue) {
-    noteModel.title = newValue;
+    title = newValue;
   }
 
-  void saveDocument() {
-    // Notus documents can be easily serialized to JSON by passing to
-    // `jsonEncode` directly
-    final contents = jsonEncode(zefcontroller.document);
+  void saveDocument() async {
+    // here you should update the noteModel.title to value of temp title
+    final contents = jsonEncode(zefcontroller.document.toJson());
+    noteModel.title = title;
     noteModel.note = contents;
-
-    appController.dbProvider.insertNote(noteModel);
+    final id = await appController.dbProvider.updateNote(noteModel);
+    noteModel = await appController.dbProvider.fetchNote(id);
   }
 }

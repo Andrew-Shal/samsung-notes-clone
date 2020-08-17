@@ -7,7 +7,7 @@ import '../models/note_model.dart';
 
 class NotesDbProvider {
   Database db;
-  static const String dbName = "notes32.db";
+  static const String dbName = "notes38.db";
 
   Future _open({name = dbName}) async {
     if (db == null || db.isOpen) {
@@ -81,6 +81,20 @@ class NotesDbProvider {
       """);
 
     return id;
+  }
+
+  // TODO : add category key update
+  Future<int> updateNote(NoteModel updatedNote) async {
+    await _open();
+
+    return await db.update(
+      "notes",
+      {
+        "title": updatedNote.title,
+        "note": updatedNote.note,
+      },
+      where: "id=${updatedNote.id}",
+    );
   }
 
   Future<NoteModel> fetchNote(int id) async {

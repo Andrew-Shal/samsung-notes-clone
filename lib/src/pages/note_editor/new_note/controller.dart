@@ -11,17 +11,13 @@ class NewNoteController extends GetxController {
   AppController appController = Get.find();
   HomeController homeController = Get.find();
 
-  /// Allows to control the editor and the document.
   ZefyrController zefcontroller;
-
-  /// Zefyr editor like any other input field requires a focus node.
   FocusNode focusNode;
 
   NoteModel noteModel;
 
   NewNoteController() {
     loadWYSIWYG();
-
     noteModel = NoteModel();
   }
 
@@ -30,13 +26,10 @@ class NewNoteController extends GetxController {
     final document = _loadDocument();
     zefcontroller = ZefyrController(document);
     focusNode = FocusNode();
+    update();
   }
 
-  /// Loads the document to be edited in Zefyr.
   NotusDocument _loadDocument() {
-    // For simplicity we hardcode a simple document with one line of text
-    // saying "Zefyr Quick Start".
-    // (Note that delta must always end with newline.)
     final Delta delta = Delta()..insert("Zefyr Quick Start\n");
     return NotusDocument.fromDelta(delta);
   }
@@ -46,9 +39,8 @@ class NewNoteController extends GetxController {
   }
 
   void saveDocument() async {
-    final contents = jsonEncode(zefcontroller.document.toPlainText());
+    final contents = jsonEncode(zefcontroller.document.toJson());
     noteModel.note = contents;
-
     int id = await appController.dbProvider.insertNote(noteModel);
 
     // ignore: todo
